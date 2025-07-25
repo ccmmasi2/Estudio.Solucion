@@ -9,6 +9,7 @@ namespace Estudio.Infrastructure
 
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Brand> Brands => Set<Brand>();
+        public DbSet<FragranceType> FragranceTypes => Set<FragranceType>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +57,23 @@ namespace Estudio.Infrastructure
             });
 
             modelBuilder.Entity<Brand>(builder =>
+            {
+                builder.HasKey(b => b.Id);
+                builder.Property(p => p.Id)
+                    .ValueGeneratedOnAdd();
+
+                builder.Property(b => b.Name)
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                builder.Property(b => b.Description)
+                    .HasMaxLength(1000);
+
+                builder.HasIndex(b => b.Name)
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<FragranceType>(builder =>
             {
                 builder.HasKey(b => b.Id);
                 builder.Property(p => p.Id)

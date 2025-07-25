@@ -15,17 +15,51 @@ namespace Estudio.Application.Implementation
             _db = db;
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<ProductDto>> GetAllAsync()
         {
-            return await _db.Products.ToListAsync();
+            var dtos = await _db.Products
+                 .Select(b => new ProductDto
+                 {
+                     Id = b.Id,
+                     Name = b.Name,
+                     FragranceType = b.FragranceType,
+                     Price = b.Price,
+                     IsOutOfStock = b.IsOutOfStock,
+                     Gender = b.Gender,
+                     DiscountPercentage = b.DiscountPercentage,
+                     IsNew = b.IsNew,
+                     ImageUrl = b.ImageUrl,
+                     PresentationMM = b.PresentationMM,
+                     BrandId = b.BrandId,
+                     BrandName = b.Brand.Name
+                 }).ToListAsync();
+
+            return dtos;
         }
 
-        public async Task<Product?> GetByIdAsync(int id)
+        public async Task<ProductDto?> GetByIdAsync(int id)
         {
-            return await _db.Products.FindAsync(id);
+            return await _db.Products
+                .Where(p => p.Id == id)
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    FragranceType = p.FragranceType,
+                    Price = p.Price,
+                    IsOutOfStock = p.IsOutOfStock,
+                    Gender = p.Gender,
+                    DiscountPercentage = p.DiscountPercentage,
+                    IsNew = p.IsNew,
+                    ImageUrl = p.ImageUrl,
+                    PresentationMM = p.PresentationMM,
+                    BrandId = p.BrandId,
+                    BrandName = p.Brand.Name
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<Product> CreateWithValidationAsync(ProductDto dto)
+        public async Task<ProductDto> CreateWithValidationAsync(ProductDto dto)
         {
             var brand = await _db.Brands.FindAsync(dto.BrandId);
             if (brand == null)
@@ -44,7 +78,23 @@ namespace Estudio.Application.Implementation
 
             _db.Products.Add(product);
             await _db.SaveChangesAsync();
-            return product;
+
+            var resultDto = new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                FragranceType = product.FragranceType,
+                Price = product.Price,
+                IsOutOfStock = product.IsOutOfStock,
+                Gender = product.Gender,
+                DiscountPercentage = product.DiscountPercentage,
+                IsNew = product.IsNew,
+                ImageUrl = product.ImageUrl,
+                PresentationMM = product.PresentationMM,
+                BrandId = product.BrandId,
+                BrandName = product.Brand.Name
+            };
+            return resultDto;
         }
     }
 }

@@ -6,11 +6,11 @@ namespace Estudio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandController : ControllerBase
+    public class ProductTypeController : ControllerBase
     {
         private readonly IBrandService _service;
 
-        public BrandController(IBrandService service)
+        public ProductTypeController(IBrandService service)
         {
             _service = service;
         }

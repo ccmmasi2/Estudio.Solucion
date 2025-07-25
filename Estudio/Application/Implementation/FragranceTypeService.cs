@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Estudio.Application.Implementation
 {
-    public class BrandService : IBrandService
+    public class FragranceTypeService : IFragranceTypeService
     {
         private readonly AppDbContext _db;
 
-        public BrandService(AppDbContext db)
+        public FragranceTypeService(AppDbContext db)
         {
             _db = db;
         }
 
-        public async Task<List<BrandDto>> GetAllAsync()
+        public async Task<List<FragranceTypeDto>> GetAllAsync()
         {
-            var dtos = await _db.Brands
-                 .Select(b => new BrandDto
+            var dtos = await _db.FragranceTypes
+                 .Select(b => new FragranceTypeDto
                  {
                      Id = b.Id,
                      Name = b.Name,
@@ -27,11 +27,11 @@ namespace Estudio.Application.Implementation
             return dtos;
         }
 
-        public async Task<BrandDto?> GetByIdAsync(int id)
+        public async Task<FragranceTypeDto?> GetByIdAsync(int id)
         {
-            return await _db.Brands
+            return await _db.FragranceTypes
                 .Where(b => b.Id == id)
-                .Select(b => new BrandDto
+                .Select(b => new FragranceTypeDto
                 {
                     Id = b.Id,
                     Name = b.Name,
@@ -40,26 +40,26 @@ namespace Estudio.Application.Implementation
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<BrandDto> CreateWithValidationAsync(BrandDto dto)
+        public async Task<FragranceTypeDto> CreateWithValidationAsync(FragranceTypeDto dto)
         {
-            var exists = await _db.Brands.AnyAsync(x =>
+            var exists = await _db.FragranceTypes.AnyAsync(x =>
                                                     x.Name.ToLower() == dto.Name.ToLower());
 
-            if (exists) throw new InvalidOperationException("Brand already exists");
+            if (exists) throw new InvalidOperationException("FragranceType already exists");
 
-            var brand = new Brand(dto.Name, dto.Description);
+            var fragranceType = new FragranceType(dto.Name, dto.Description);
 
-            _db.Brands.Add(brand);
+            _db.FragranceTypes.Add(fragranceType);
             await _db.SaveChangesAsync();
 
-            var resultDto = new BrandDto
+            var resultDto = new FragranceTypeDto
             {
-                Id = brand.Id,
-                Name = brand.Name,
-                Description = brand.Description
+                Id = fragranceType.Id,
+                Name = fragranceType.Name,
+                Description = fragranceType.Description
             };
             return resultDto;
-        }
+        } 
     }
 }
 
