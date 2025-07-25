@@ -1,8 +1,8 @@
 ﻿namespace Estudio.API.DTO
 {
     public record ProductDto(
-        string BrandName,
-        string ProductName,
+        int BrandId,
+        string Name,
         string FragranceType,
         decimal Price,
         bool IsOutOfStock,

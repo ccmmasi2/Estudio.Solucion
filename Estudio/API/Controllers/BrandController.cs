@@ -1,16 +1,17 @@
 ﻿using Estudio.API.DTO;
 using Estudio.Application.Interface;
+using Estudio.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estudio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class BrandController : ControllerBase
     {
-        private readonly IProductService _service;
+        private readonly IBrandService _service;
 
-        public ProductController(IProductService service)
+        public BrandController(IBrandService service)
         {
             _service = service;
         }
@@ -18,20 +19,20 @@ namespace Estudio.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _service.GetAllAsync();
-            return Ok(products);
+            var brands = await _service.GetAllAsync();
+            return Ok(brands);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var product = await _service.GetByIdAsync(id);
-            return product == null ? NotFound() : Ok(product);
+            var brand = await _service.GetByIdAsync(id);
+            return brand == null ? NotFound() : Ok(brand);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductDto dto)
-        {           
+        public async Task<IActionResult> Create(BrandDto dto)
+        {
             var created = await _service.CreateWithValidationAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }

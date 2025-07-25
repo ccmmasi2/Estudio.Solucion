@@ -8,6 +8,7 @@ namespace Estudio.Infrastructure
         public AppDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Brand> Brands => Set<Brand>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -16,7 +17,7 @@ namespace Estudio.Infrastructure
                 builder.HasKey(p => p.Id);
                 builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
-                builder.Property(p => p.ProductName)
+                builder.Property(p => p.Name)
                                 .HasMaxLength(50)
                                 .IsRequired();
 
@@ -29,8 +30,27 @@ namespace Estudio.Infrastructure
                 builder.Property(p => p.IsNew)
                                 .HasDefaultValue(false);
 
-                builder.HasIndex(p => new { p.BrandName, p.ProductName, p.FragranceType, p.Price, p.Gender })
+                builder.HasOne(p => p.brand)
+                                .WithMany(p => p.Products)
+                                .HasForeignKey(p => p.BrandId)
+                                .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasIndex(p => new { p.BrandId, p.Name, p.FragranceType, p.Price, p.Gender })
                .IsUnique();
+            });
+
+            modelBuilder.Entity<Brand>(builder =>
+            {
+                builder.HasKey(b => b.Id);
+                builder.Property(p => p.Id).ValueGeneratedOnAdd();
+
+                builder.Property(b => b.Name)
+                                .HasMaxLength(50)
+                                .IsRequired();
+
+                builder.Property(b => b.Description)
+                                .HasMaxLength(1000)
+                                .IsRequired();
             });
         }
     }

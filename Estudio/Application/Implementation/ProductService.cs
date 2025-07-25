@@ -1,4 +1,5 @@
-﻿using Estudio.Application.Interface;
+﻿using Estudio.API.DTO;
+using Estudio.Application.Interface;
 using Estudio.Domain;
 using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +25,22 @@ namespace Estudio.Application.Implementation
             return await _db.Products.FindAsync(id);
         }
 
-        public async Task<Product> CreateAsync(Product product)
+        public async Task<Product> CreateWithValidationAsync(ProductDto dto)
         {
+            var brand = await _db.Brands.FindAsync(dto.BrandId);
+            if (brand == null)
+                throw new Exception("Brand does not exist.");
+
             var exists = await _db.Products.AnyAsync(x =>
-                                                        x.BrandName == product.BrandName &&
-                                                        x.ProductName == product.ProductName &&
-                                                        x.Gender == product.Gender &&
-                                                        x.FragranceType == product.FragranceType);
+                                                        x.BrandId == dto.BrandId &&
+                                                        x.Name == dto.Name &&
+                                                        x.Gender == dto.Gender &&
+                                                        x.FragranceType == dto.FragranceType);
 
             if (exists) throw new InvalidOperationException("Product already exists");
+
+            var product = new Product(dto.BrandId, dto.Name, dto.FragranceType, dto.Price, dto.IsOutOfStock, dto.Gender,
+            dto.DiscountPercentage, dto.IsNew, dto.ImageUrl);
 
             _db.Products.Add(product);
             await _db.SaveChangesAsync();
