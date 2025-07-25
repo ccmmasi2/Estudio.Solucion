@@ -1,0 +1,58 @@
+﻿using Estudio.API.DTO;
+using Estudio.Application.Interface;
+using Estudio.Domain;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Estudio.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductService _service;
+
+        public ProductController(IProductService service)
+        {
+            _service = service;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = await _service.GetAllAsync();
+            return Ok(products);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var product = await _service.GetByIdAsync(id);
+            return product == null ? NotFound() : Ok(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductDto dto)
+        {
+            var product = new Product(dto.BrandName, dto.ProductName, dto.FragranceType, dto.Price, dto.IsOutOfStock, dto.Gender,
+            dto.DiscountPercentage, dto.IsNew, dto.ImageUrl);
+           
+            var created = await _service.CreateAsync(product);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        }
+    } 
+}
+
+
+//[HttpPatch("{id:guid}/discount")]
+//public async Task<IActionResult> ApplyDiscount(Guid id, [FromQuery] decimal percent)
+//{
+//    var updated = await _service.ApplyDiscountAsync(id, percent);
+//    return updated == null ? NotFound() : Ok(updated);
+//}
+
+//[HttpGet("category/{category}")]
+//public async Task<IActionResult> GetByCategory(string category)
+//{
+//    var products = await _service.GetByCategoryAsync(category);
+//    return Ok(products);
+//}
