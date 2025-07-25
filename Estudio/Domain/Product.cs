@@ -7,8 +7,10 @@
         public int BrandId { get; private set; }
         public Brand Brand { get; private set; } = default!;
 
+        public int FragranceTypeId { get; private set; }
+        public FragranceType FragranceType { get; private set; } = default!;
+
         public string Name { get; private set; } = default!;
-        public string FragranceType { get; private set; } = default!;
         public decimal Price { get; private set; }
         public bool IsOutOfStock { get; private set; } = false;
         public string Gender { get; private set; } = default!;
@@ -19,13 +21,13 @@
 
         protected Product() { }  
 
-        public Product(int brandId, string name, string fragranceType, decimal price,
+        public Product(int brandId, string name, int fragranceTypeId, decimal price,
             bool isOutOfStock, string gender, decimal? discountPercentage, bool isNew, 
             string? imageUrl, int presentationMM)
         {
             BrandId = brandId;
+            FragranceTypeId = fragranceTypeId;
             Name = name;
-            FragranceType = fragranceType;
             Price = price;
             IsOutOfStock = isOutOfStock;
             Gender = gender;

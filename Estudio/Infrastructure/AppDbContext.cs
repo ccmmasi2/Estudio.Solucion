@@ -15,78 +15,83 @@ namespace Estudio.Infrastructure
         {
             modelBuilder.Entity<Product>(builder =>
             {
-                builder.HasKey(p => p.Id);
-                builder.Property(p => p.Id)
+                builder.HasKey(x => x.Id);
+                builder.Property(x => x.Id)
                     .ValueGeneratedOnAdd();
 
-                builder.Property(p => p.Name)
+                builder.Property(x => x.Name)
                     .HasMaxLength(50)
+                    .IsRequired(); 
+
+                builder.Property(x => x.Price)
                     .IsRequired();
 
-                builder.Property(p => p.FragranceType)
+                builder.Property(x => x.Gender)
                     .IsRequired();
 
-                builder.Property(p => p.Price)
-                    .IsRequired();
-
-                builder.Property(p => p.Gender)
-                    .IsRequired();
-
-                builder.Property(p => p.ImageUrl)
+                builder.Property(x => x.ImageUrl)
                     .HasMaxLength(5000);
 
-                builder.Property(p => p.IsOutOfStock)
+                builder.Property(x => x.IsOutOfStock)
                     .HasDefaultValue(false);
 
-                builder.Property(p => p.IsNew)
+                builder.Property(x => x.IsNew)
                     .HasDefaultValue(false);
 
-                builder.Property(p => p.PresentationMM)
+                builder.Property(x => x.PresentationMM)
                     .IsRequired();
 
-                builder.Property(p => p.BrandId)
+                builder.Property(x => x.BrandId)
                     .IsRequired();
 
-                builder.HasOne(p => p.Brand)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(p => p.BrandId)
+                builder.Property(x => x.FragranceTypeId)
+                    .IsRequired();
+
+                builder.HasOne(x => x.Brand)
+                    .WithMany(x => x.Products)
+                    .HasForeignKey(x => x.BrandId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                builder.HasIndex(p => new { p.BrandId, p.Name, p.FragranceType, p.Price, p.Gender })
-               .IsUnique();
+                builder.HasOne(x => x.FragranceType)
+                    .WithMany(x => x.Products)
+                    .HasForeignKey(x => x.FragranceTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasIndex(x => new { x.BrandId, x.Name, x.FragranceType, x.Price, x.Gender })
+                    .IsUnique();
             });
 
             modelBuilder.Entity<Brand>(builder =>
             {
-                builder.HasKey(b => b.Id);
-                builder.Property(p => p.Id)
+                builder.HasKey(x => x.Id);
+                builder.Property(x => x.Id)
                     .ValueGeneratedOnAdd();
 
-                builder.Property(b => b.Name)
+                builder.Property(x => x.Name)
                     .HasMaxLength(50)
                     .IsRequired();
 
-                builder.Property(b => b.Description)
+                builder.Property(x => x.Description)
                     .HasMaxLength(1000);
 
-                builder.HasIndex(b => b.Name)
+                builder.HasIndex(x => x.Name)
                     .IsUnique();
             });
 
             modelBuilder.Entity<FragranceType>(builder =>
             {
-                builder.HasKey(b => b.Id);
-                builder.Property(p => p.Id)
+                builder.HasKey(x => x.Id);
+                builder.Property(x => x.Id)
                     .ValueGeneratedOnAdd();
 
-                builder.Property(b => b.Name)
+                builder.Property(x => x.Name)
                     .HasMaxLength(50)
                     .IsRequired();
 
-                builder.Property(b => b.Description)
+                builder.Property(x => x.Description)
                     .HasMaxLength(1000);
 
-                builder.HasIndex(b => b.Name)
+                builder.HasIndex(x => x.Name)
                     .IsUnique();
             });
         }

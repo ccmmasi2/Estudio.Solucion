@@ -18,20 +18,23 @@ namespace Estudio.Application.Implementation
         public async Task<List<ProductDto>> GetAllAsync()
         {
             var dtos = await _db.Products
-                 .Select(b => new ProductDto
+                 .Select(x => new ProductDto
                  {
-                     Id = b.Id,
-                     Name = b.Name,
-                     FragranceType = b.FragranceType,
-                     Price = b.Price,
-                     IsOutOfStock = b.IsOutOfStock,
-                     Gender = b.Gender,
-                     DiscountPercentage = b.DiscountPercentage,
-                     IsNew = b.IsNew,
-                     ImageUrl = b.ImageUrl,
-                     PresentationMM = b.PresentationMM,
-                     BrandId = b.BrandId,
-                     BrandName = b.Brand.Name
+                     Id = x.Id,
+                     Name = x.Name,
+                     Price = x.Price,
+                     IsOutOfStock = x.IsOutOfStock,
+                     Gender = x.Gender,
+                     DiscountPercentage = x.DiscountPercentage,
+                     IsNew = x.IsNew,
+                     ImageUrl = x.ImageUrl,
+                     PresentationMM = x.PresentationMM,
+
+                     BrandId = x.BrandId,
+                     BrandName = x.Brand.Name,
+
+                     FragranceTypeId = x.FragranceTypeId,
+                     FragranceTypeName = x.FragranceType.Name
                  }).ToListAsync();
 
             return dtos;
@@ -40,21 +43,24 @@ namespace Estudio.Application.Implementation
         public async Task<ProductDto?> GetByIdAsync(int id)
         {
             return await _db.Products
-                .Where(p => p.Id == id)
-                .Select(p => new ProductDto
+                .Where(x => x.Id == id)
+                .Select(x => new ProductDto
                 {
-                    Id = p.Id,
-                    Name = p.Name,
-                    FragranceType = p.FragranceType,
-                    Price = p.Price,
-                    IsOutOfStock = p.IsOutOfStock,
-                    Gender = p.Gender,
-                    DiscountPercentage = p.DiscountPercentage,
-                    IsNew = p.IsNew,
-                    ImageUrl = p.ImageUrl,
-                    PresentationMM = p.PresentationMM,
-                    BrandId = p.BrandId,
-                    BrandName = p.Brand.Name
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    IsOutOfStock = x.IsOutOfStock,
+                    Gender = x.Gender,
+                    DiscountPercentage = x.DiscountPercentage,
+                    IsNew = x.IsNew,
+                    ImageUrl = x.ImageUrl,
+                    PresentationMM = x.PresentationMM,
+
+                    BrandId = x.BrandId,
+                    BrandName = x.Brand.Name,
+
+                    FragranceTypeId = x.FragranceTypeId,
+                    FragranceTypeName = x.FragranceType.Name
                 })
                 .FirstOrDefaultAsync();
         }
@@ -67,13 +73,13 @@ namespace Estudio.Application.Implementation
 
             var exists = await _db.Products.AnyAsync(x =>
                                                         x.BrandId == dto.BrandId &&
+                                                        x.FragranceTypeId == dto.FragranceTypeId &&
                                                         x.Name.ToLower() == dto.Name.ToLower() &&
-                                                        x.Gender == dto.Gender &&
-                                                        x.FragranceType == dto.FragranceType);
+                                                        x.Gender == dto.Gender);
 
             if (exists) throw new InvalidOperationException("Product already exists");
 
-            var product = new Product(dto.BrandId, dto.Name, dto.FragranceType, dto.Price, dto.IsOutOfStock, dto.Gender,
+            var product = new Product(dto.BrandId, dto.Name, dto.FragranceTypeId, dto.Price, dto.IsOutOfStock, dto.Gender,
             dto.DiscountPercentage, dto.IsNew, dto.ImageUrl, dto.PresentationMM);
 
             _db.Products.Add(product);
@@ -83,7 +89,6 @@ namespace Estudio.Application.Implementation
             {
                 Id = product.Id,
                 Name = product.Name,
-                FragranceType = product.FragranceType,
                 Price = product.Price,
                 IsOutOfStock = product.IsOutOfStock,
                 Gender = product.Gender,
@@ -91,8 +96,12 @@ namespace Estudio.Application.Implementation
                 IsNew = product.IsNew,
                 ImageUrl = product.ImageUrl,
                 PresentationMM = product.PresentationMM,
+
                 BrandId = product.BrandId,
-                BrandName = product.Brand.Name
+                BrandName = product.Brand.Name,
+
+                FragranceTypeId = product.FragranceTypeId,
+                FragranceTypeName = product.FragranceType.Name
             };
             return resultDto;
         }
@@ -103,8 +112,8 @@ namespace Estudio.Application.Implementation
 //public async Task<List<Product>> GetByCategoryAsync(string category)
 //{
 //    return await _db.Products
-//        .Where(p => p.Category == category && p.Price < 500)
-//        .OrderBy(p => p.Price)
+//        .Where(p => x.Category == category && x.Price < 500)
+//        .OrderBy(p => x.Price)
 //        .ToListAsync();
 //}
 

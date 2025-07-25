@@ -18,11 +18,11 @@ namespace Estudio.Application.Implementation
         public async Task<List<BrandDto>> GetAllAsync()
         {
             var dtos = await _db.Brands
-                 .Select(b => new BrandDto
+                 .Select(x => new BrandDto
                  {
-                     Id = b.Id,
-                     Name = b.Name,
-                     Description = b.Description
+                     Id = x.Id,
+                     Name = x.Name,
+                     Description = x.Description
                  }).ToListAsync();
             return dtos;
         }
@@ -30,12 +30,12 @@ namespace Estudio.Application.Implementation
         public async Task<BrandDto?> GetByIdAsync(int id)
         {
             return await _db.Brands
-                .Where(b => b.Id == id)
-                .Select(b => new BrandDto
+                .Where(x => x.Id == id)
+                .Select(x => new BrandDto
                 {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Description = b.Description
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description
                 })
                 .FirstOrDefaultAsync();
         }
@@ -67,8 +67,8 @@ namespace Estudio.Application.Implementation
 //public async Task<List<Product>> GetByCategoryAsync(string category)
 //{
 //    return await _db.Products
-//        .Where(p => p.Category == category && p.Price < 500)
-//        .OrderBy(p => p.Price)
+//        .Where(p => x.Category == category && x.Price < 500)
+//        .OrderBy(p => x.Price)
 //        .ToListAsync();
 //}
 

@@ -10,8 +10,6 @@ namespace Estudio.API.DTO
         [Required, MaxLength(50)]
         public string Name { get; init; } = default!;
 
-        [Required, MaxLength(30)]
-        public string FragranceType { get; init; } = default!;
         public decimal Price { get; init; }
 
         [DefaultValue(false)]
@@ -30,6 +28,10 @@ namespace Estudio.API.DTO
         [Required]
         public int BrandId { get; init; }
         public string? BrandName { get; init; }
+
+        [Required]
+        public int FragranceTypeId { get; init; }
+        public string? FragranceTypeName { get; init; }
 
         [Required, DefaultValue(100)]
         public int PresentationMM { get; init; }
