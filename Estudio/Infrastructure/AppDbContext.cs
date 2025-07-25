@@ -15,25 +15,41 @@ namespace Estudio.Infrastructure
             modelBuilder.Entity<Product>(builder =>
             {
                 builder.HasKey(p => p.Id);
-                builder.Property(p => p.Id).ValueGeneratedOnAdd();
+                builder.Property(p => p.Id)
+                    .ValueGeneratedOnAdd();
 
                 builder.Property(p => p.Name)
-                                .HasMaxLength(50)
-                                .IsRequired();
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                builder.Property(p => p.FragranceType)
+                    .IsRequired();
+
+                builder.Property(p => p.Price)
+                    .IsRequired();
+
+                builder.Property(p => p.Gender)
+                    .IsRequired();
 
                 builder.Property(p => p.ImageUrl)
-                                .HasMaxLength(5000);
+                    .HasMaxLength(5000);
 
                 builder.Property(p => p.IsOutOfStock)
-                                .HasDefaultValue(false);
+                    .HasDefaultValue(false);
 
                 builder.Property(p => p.IsNew)
-                                .HasDefaultValue(false);
+                    .HasDefaultValue(false);
 
-                builder.HasOne(p => p.brand)
-                                .WithMany(p => p.Products)
-                                .HasForeignKey(p => p.BrandId)
-                                .OnDelete(DeleteBehavior.Restrict);
+                builder.Property(p => p.PresentationMM)
+                    .IsRequired();
+
+                builder.Property(p => p.BrandId)
+                    .IsRequired();
+
+                builder.HasOne(p => p.Brand)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(p => p.BrandId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 builder.HasIndex(p => new { p.BrandId, p.Name, p.FragranceType, p.Price, p.Gender })
                .IsUnique();
@@ -42,15 +58,18 @@ namespace Estudio.Infrastructure
             modelBuilder.Entity<Brand>(builder =>
             {
                 builder.HasKey(b => b.Id);
-                builder.Property(p => p.Id).ValueGeneratedOnAdd();
+                builder.Property(p => p.Id)
+                    .ValueGeneratedOnAdd();
 
                 builder.Property(b => b.Name)
-                                .HasMaxLength(50)
-                                .IsRequired();
+                    .HasMaxLength(50)
+                    .IsRequired();
 
                 builder.Property(b => b.Description)
-                                .HasMaxLength(1000)
-                                .IsRequired();
+                    .HasMaxLength(1000);
+
+                builder.HasIndex(b => b.Name)
+                    .IsUnique();
             });
         }
     }

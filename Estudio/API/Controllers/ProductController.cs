@@ -33,7 +33,24 @@ namespace Estudio.API.Controllers
         public async Task<IActionResult> Create(ProductDto dto)
         {           
             var created = await _service.CreateWithValidationAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+
+            var resultDto = new ProductDto
+            {
+                Id = created.Id,
+                Name = created.Name,
+                FragranceType = created.FragranceType,
+                Price = created.Price,
+                IsOutOfStock = created.IsOutOfStock,
+                Gender = created.Gender,
+                DiscountPercentage = created.DiscountPercentage,
+                IsNew = created.IsNew,
+                ImageUrl = created.ImageUrl,
+                PresentationMM = created.PresentationMM,
+
+                BrandId = created.BrandId,
+                BrandName = created.Brand.Name
+            };
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, resultDto);
         }
     } 
 }

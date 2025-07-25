@@ -1,6 +1,16 @@
-﻿namespace Estudio.API.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Estudio.API.DTO
 {
-    public record BrandDto(
-        string Name,
-        string? Description);
+    public record BrandDto
+    {
+        public int Id { get; init; }
+
+        [Required, MaxLength(50)]
+        public string Name { get; init; } = default!;
+
+
+        [MaxLength(1000)]
+        public string? Description { get; init; }
+    }
 }

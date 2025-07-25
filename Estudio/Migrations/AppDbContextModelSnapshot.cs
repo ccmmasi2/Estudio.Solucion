@@ -23,7 +23,6 @@ namespace Estudio.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
@@ -33,6 +32,9 @@ namespace Estudio.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Brands");
                 });
@@ -76,6 +78,9 @@ namespace Estudio.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("PresentationMM")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
@@ -89,13 +94,13 @@ namespace Estudio.Migrations
 
             modelBuilder.Entity("Estudio.Domain.Product", b =>
                 {
-                    b.HasOne("Estudio.Domain.Brand", "brand")
+                    b.HasOne("Estudio.Domain.Brand", "Brand")
                         .WithMany("Products")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("brand");
+                    b.Navigation("Brand");
                 });
 
             modelBuilder.Entity("Estudio.Domain.Brand", b =>

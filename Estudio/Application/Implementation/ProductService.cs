@@ -33,14 +33,14 @@ namespace Estudio.Application.Implementation
 
             var exists = await _db.Products.AnyAsync(x =>
                                                         x.BrandId == dto.BrandId &&
-                                                        x.Name == dto.Name &&
+                                                        x.Name.ToLower() == dto.Name.ToLower() &&
                                                         x.Gender == dto.Gender &&
                                                         x.FragranceType == dto.FragranceType);
 
             if (exists) throw new InvalidOperationException("Product already exists");
 
             var product = new Product(dto.BrandId, dto.Name, dto.FragranceType, dto.Price, dto.IsOutOfStock, dto.Gender,
-            dto.DiscountPercentage, dto.IsNew, dto.ImageUrl);
+            dto.DiscountPercentage, dto.IsNew, dto.ImageUrl, dto.PresentationMM);
 
             _db.Products.Add(product);
             await _db.SaveChangesAsync();

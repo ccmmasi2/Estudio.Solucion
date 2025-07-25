@@ -1,6 +1,5 @@
 ﻿using Estudio.API.DTO;
 using Estudio.Application.Interface;
-using Estudio.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estudio.API.Controllers
@@ -34,7 +33,14 @@ namespace Estudio.API.Controllers
         public async Task<IActionResult> Create(BrandDto dto)
         {
             var created = await _service.CreateWithValidationAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+
+            var resultDto = new BrandDto
+            {
+                Id = created.Id,
+                Name = created.Name,
+                Description = created.Description
+            };
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, resultDto);
         }
     } 
 }

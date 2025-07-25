@@ -5,7 +5,7 @@
 namespace Estudio.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace Estudio.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false)
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,7 +38,8 @@ namespace Estudio.Migrations
                     Gender = table.Column<string>(type: "TEXT", nullable: false),
                     DiscountPercentage = table.Column<decimal>(type: "TEXT", nullable: true),
                     IsNew = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true)
+                    ImageUrl = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true),
+                    PresentationMM = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,6 +51,12 @@ namespace Estudio.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Brands_Name",
+                table: "Brands",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId_Name_FragranceType_Price_Gender",

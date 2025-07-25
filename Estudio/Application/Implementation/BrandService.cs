@@ -28,8 +28,7 @@ namespace Estudio.Application.Implementation
         public async Task<Brand> CreateWithValidationAsync(BrandDto dto)
         {
             var exists = await _db.Brands.AnyAsync(x =>
-                                                    x.Name == dto.Name &&
-                                                    x.Description == dto.Description);
+                                                    x.Name.ToLower() == dto.Name.ToLower());
 
             if (exists) throw new InvalidOperationException("Brand already exists");
 
