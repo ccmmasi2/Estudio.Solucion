@@ -7,10 +7,10 @@
         public string ProductName { get; private set; } = default!;
         public string FragranceType { get; private set; } = default!;
         public decimal Price { get; private set; }
-        public bool IsOutOfStock { get; private set; }
+        public bool IsOutOfStock { get; private set; } = false;
         public string Gender { get; private set; } = default!;
         public decimal? DiscountPercentage { get; private set; }
-        public bool IsNew { get; private set; }
+        public bool IsNew { get; private set; } = false;
         public string? ImageUrl { get; private set; } 
 
         protected Product() { }  
