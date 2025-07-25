@@ -79,8 +79,9 @@ namespace Estudio.Application.Implementation
 
             if (exists) throw new InvalidOperationException("Product already exists");
 
-            var product = new Product(dto.BrandId, dto.Name, dto.FragranceTypeId, dto.Price, dto.IsOutOfStock, dto.Gender,
-            dto.DiscountPercentage, dto.IsNew, dto.ImageUrl, dto.PresentationMM);
+            var product = new Product(dto.Name, dto.Price, dto.IsOutOfStock, dto.Gender,
+                                        dto.DiscountPercentage, dto.IsNew, dto.ImageUrl, 
+                                        dto.PresentationMM, dto.BrandId, dto.FragranceTypeId);
 
             _db.Products.Add(product);
             await _db.SaveChangesAsync();

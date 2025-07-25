@@ -21,12 +21,10 @@
 
         protected Product() { }  
 
-        public Product(int brandId, string name, int fragranceTypeId, decimal price,
+        public Product(string name, decimal price,
             bool isOutOfStock, string gender, decimal? discountPercentage, bool isNew, 
-            string? imageUrl, int presentationMM)
+            string? imageUrl, int presentationMM, int brandId, int fragranceTypeId)
         {
-            BrandId = brandId;
-            FragranceTypeId = fragranceTypeId;
             Name = name;
             Price = price;
             IsOutOfStock = isOutOfStock;
@@ -35,6 +33,9 @@
             IsNew = isNew;
             ImageUrl = imageUrl;
             PresentationMM = presentationMM;
+
+            BrandId = brandId;
+            FragranceTypeId = fragranceTypeId;
         }
 
         public decimal GetDiscountedPrice()

@@ -57,7 +57,7 @@ namespace Estudio.Infrastructure
                     .HasForeignKey(x => x.FragranceTypeId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                builder.HasIndex(x => new { x.BrandId, x.Name, x.FragranceType, x.Price, x.Gender })
+                builder.HasIndex(x => new { x.BrandId, x.FragranceTypeId, x.Name, x.Price, x.Gender })
                     .IsUnique();
             });
 

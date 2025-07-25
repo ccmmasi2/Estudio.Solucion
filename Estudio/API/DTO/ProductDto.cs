@@ -25,6 +25,9 @@ namespace Estudio.API.DTO
         [DefaultValue("No image yet")]
         public string? ImageUrl { get; init; }
 
+        [Required, DefaultValue(100)]
+        public int PresentationMM { get; init; }
+
         [Required]
         public int BrandId { get; init; }
         public string? BrandName { get; init; }
@@ -32,8 +35,5 @@ namespace Estudio.API.DTO
         [Required]
         public int FragranceTypeId { get; init; }
         public string? FragranceTypeName { get; init; }
-
-        [Required, DefaultValue(100)]
-        public int PresentationMM { get; init; }
     }
 }
