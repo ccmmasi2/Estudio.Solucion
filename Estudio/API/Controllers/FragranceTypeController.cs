@@ -6,11 +6,11 @@ namespace Estudio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductTypeController : ControllerBase
+    public class FragranceTypeController : ControllerBase
     {
-        private readonly IBrandService _service;
+        private readonly IFragranceTypeService _service;
 
-        public ProductTypeController(IBrandService service)
+        public FragranceTypeController(IFragranceTypeService service)
         {
             _service = service;
         }
@@ -18,19 +18,19 @@ namespace Estudio.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var brands = await _service.GetAllAsync();
-            return Ok(brands);
+            var fragranceTypes = await _service.GetAllAsync();
+            return Ok(fragranceTypes);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var brand = await _service.GetByIdAsync(id);
-            return brand == null ? NotFound() : Ok(brand);
+            var fragranceType = await _service.GetByIdAsync(id);
+            return fragranceType == null ? NotFound() : Ok(fragranceType);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandDto dto)
+        public async Task<IActionResult> Create(FragranceTypeDto dto)
         {
             var created = await _service.CreateWithValidationAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);

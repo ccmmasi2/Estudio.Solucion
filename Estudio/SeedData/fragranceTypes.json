@@ -1,0 +1,22 @@
+[
+  {
+    "Name": "EDT",
+    "Description": "Eau de Toilette"
+  },
+  {
+    "Name": "EDP",
+    "Description": "EAU de parfum"
+  },
+  {
+    "Name": "PARFUM",
+    "Description": null
+  },
+  {
+    "Name": "Cream",
+    "Description": null
+  },
+  {
+    "Name": "Splash",
+    "Description": null
+  }
+]

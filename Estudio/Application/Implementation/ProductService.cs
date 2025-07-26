@@ -71,6 +71,10 @@ namespace Estudio.Application.Implementation
             if (brand == null)
                 throw new Exception("Brand does not exist.");
 
+            var fragranceType = await _db.FragranceTypes.FindAsync(dto.FragranceTypeId);
+            if (fragranceType == null)
+                throw new Exception("Fragrance Type does not exist.");
+
             var exists = await _db.Products.AnyAsync(x =>
                                                         x.BrandId == dto.BrandId &&
                                                         x.FragranceTypeId == dto.FragranceTypeId &&

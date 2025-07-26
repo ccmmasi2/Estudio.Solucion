@@ -15,5 +15,12 @@
             Name = name;
             Description = description;
         }
+
+        public FragranceType(int id, string name, string? description = null)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
     }
 }

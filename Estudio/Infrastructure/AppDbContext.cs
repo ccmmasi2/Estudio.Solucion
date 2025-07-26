@@ -92,7 +92,7 @@ namespace Estudio.Infrastructure
                     .HasMaxLength(1000);
 
                 builder.HasIndex(x => x.Name)
-                    .IsUnique();
+                    .IsUnique(); 
             });
         }
     }

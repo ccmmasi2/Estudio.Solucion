@@ -9,6 +9,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite("Data Source=Ventas.db"));
 
 builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IFragranceTypeService, FragranceTypeService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 // Add services to the container.
@@ -37,6 +38,9 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+
+    var seeder = new DbInitializer(db);
+    seeder.Initialize();
 }
 
 app.Run();
