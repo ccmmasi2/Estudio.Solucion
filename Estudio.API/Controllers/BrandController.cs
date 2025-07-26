@@ -1,5 +1,6 @@
 ﻿using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estudio.API.Controllers
@@ -15,6 +16,7 @@ namespace Estudio.API.Controllers
             _service = service;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +24,7 @@ namespace Estudio.API.Controllers
             return Ok(brands);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -29,6 +32,7 @@ namespace Estudio.API.Controllers
             return brand == null ? NotFound() : Ok(brand);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> Create(BrandDto dto)
         {
