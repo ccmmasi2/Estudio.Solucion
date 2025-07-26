@@ -1,5 +1,5 @@
-﻿using Estudio.API.DTO;
-using Estudio.Application.Interface;
+﻿using Estudio.Application.Interface;
+using Estudio.Common.DTO;
 using Estudio.Domain;
 using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -62,23 +62,3 @@ namespace Estudio.Application.Implementation
         } 
     }
 }
-
-
-//public async Task<List<Product>> GetByCategoryAsync(string category)
-//{
-//    return await _db.Products
-//        .Where(p => x.Category == category && x.Price < 500)
-//        .OrderBy(p => x.Price)
-//        .ToListAsync();
-//}
-
-//public async Task<Product?> ApplyDiscountAsync(Guid id, decimal percentage)
-//{
-//    var product = await _db.Products.FindAsync(id);
-//    if (product == null) return null;
-
-//    var discounted = product.ApplyDiscount(percentage);
-//    _db.Entry(product).CurrentValues.SetValues(discounted);
-//    await _db.SaveChangesAsync();
-//    return discounted;
-//}

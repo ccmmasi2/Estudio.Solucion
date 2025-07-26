@@ -1,4 +1,4 @@
-﻿using static Estudio.Domain.Enumerators;
+﻿using static Estudio.Common.Enums.Enumerators;
 
 namespace Estudio.Domain
 {

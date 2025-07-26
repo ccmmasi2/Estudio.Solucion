@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using static Estudio.Domain.Enumerators;
+using static Estudio.Common.Enums.Enumerators;
 
-namespace Estudio.API.DTO
+namespace Estudio.Common.DTO
 {
     public record ProductDto
     {

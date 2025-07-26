@@ -1,4 +1,4 @@
-﻿namespace Estudio.Domain
+﻿namespace Estudio.Common.Enums
 {
     public class Enumerators
     {

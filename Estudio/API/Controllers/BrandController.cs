@@ -1,5 +1,5 @@
-﻿using Estudio.API.DTO;
-using Estudio.Application.Interface;
+﻿using Estudio.Application.Interface;
+using Estudio.Common.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estudio.API.Controllers
@@ -37,18 +37,3 @@ namespace Estudio.API.Controllers
         }
     } 
 }
-
-
-//[HttpPatch("{id:guid}/discount")]
-//public async Task<IActionResult> ApplyDiscount(Guid id, [FromQuery] decimal percent)
-//{
-//    var updated = await _service.ApplyDiscountAsync(id, percent);
-//    return updated == null ? NotFound() : Ok(updated);
-//}
-
-//[HttpGet("category/{category}")]
-//public async Task<IActionResult> GetByCategory(string category)
-//{
-//    var products = await _service.GetByCategoryAsync(category);
-//    return Ok(products);
-//}

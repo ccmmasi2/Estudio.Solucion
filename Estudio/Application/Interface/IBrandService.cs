@@ -1,4 +1,4 @@
-﻿using Estudio.API.DTO;
+﻿using Estudio.Common.DTO;
 
 namespace Estudio.Application.Interface
 {

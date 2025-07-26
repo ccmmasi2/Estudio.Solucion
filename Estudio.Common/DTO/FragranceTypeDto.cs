@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Estudio.API.DTO
+namespace Estudio.Common.DTO
 {
-    public record BrandDto
+    public record FragranceTypeDto
     {
         public int Id { get; init; }
 
