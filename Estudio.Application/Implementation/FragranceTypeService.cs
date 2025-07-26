@@ -1,4 +1,5 @@
-﻿using Estudio.Application.Interface;
+﻿using Estudio.Application.Exceptions;
+using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
 using Estudio.Infrastructure;
@@ -29,7 +30,7 @@ namespace Estudio.Application.Implementation
 
         public async Task<FragranceTypeDto?> GetByIdAsync(int id)
         {
-            return await _db.FragranceTypes
+            var fragranceType = await _db.FragranceTypes
                 .Where(x => x.Id == id)
                 .Select(x => new FragranceTypeDto
                 {
@@ -38,6 +39,11 @@ namespace Estudio.Application.Implementation
                     Description = x.Description
                 })
                 .FirstOrDefaultAsync();
+
+            if (fragranceType == null)
+                throw new NotFoundException($"FragranceType with ID {id} not found.");
+
+            return fragranceType;
         }
 
         public async Task<FragranceTypeDto> CreateWithValidationAsync(FragranceTypeDto dto)

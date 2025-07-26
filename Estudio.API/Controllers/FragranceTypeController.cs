@@ -1,5 +1,6 @@
 ﻿using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
+using Estudio.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +30,7 @@ namespace Estudio.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var fragranceType = await _service.GetByIdAsync(id);
-            return fragranceType == null ? NotFound() : Ok(fragranceType);
+            return Ok(fragranceType);
         }
 
         [Authorize(Policy = "AdminOnly")]

@@ -1,4 +1,5 @@
-﻿using Estudio.Application.Interface;
+﻿using Estudio.Application.Exceptions;
+using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
 using Estudio.Infrastructure;
@@ -42,7 +43,7 @@ namespace Estudio.Application.Implementation
 
         public async Task<ProductDto?> GetByIdAsync(int id)
         {
-            return await _db.Products
+            var product = await _db.Products
                 .Where(x => x.Id == id)
                 .Select(x => new ProductDto
                 {
@@ -63,17 +64,22 @@ namespace Estudio.Application.Implementation
                     FragranceTypeName = x.FragranceType.Name
                 })
                 .FirstOrDefaultAsync();
+
+            if (product == null)
+                throw new NotFoundException($"Product with ID {id} not found.");
+
+            return product;
         }
 
         public async Task<ProductDto> CreateWithValidationAsync(ProductDto dto)
         {
             var brand = await _db.Brands.FindAsync(dto.BrandId);
             if (brand == null)
-                throw new Exception("Brand does not exist.");
+                throw new NotFoundException("Brand does not exist.");
 
             var fragranceType = await _db.FragranceTypes.FindAsync(dto.FragranceTypeId);
             if (fragranceType == null)
-                throw new Exception("Fragrance Type does not exist.");
+                throw new NotFoundException("Fragrance Type does not exist.");
 
             var exists = await _db.Products.AnyAsync(x =>
                                                         x.BrandId == dto.BrandId &&
@@ -83,9 +89,10 @@ namespace Estudio.Application.Implementation
 
             //Pattern matching
             if (dto.Price is 0)
-                throw new Exception("Price should be bigger than zero");
+                throw new BadRequestException("Price should be bigger than zero");
 
-            if (exists) throw new InvalidOperationException("Product already exists");
+            if (exists)
+                throw new ConflictException("Product already exists.");
 
             var product = new Product(dto.Name, dto.Price, dto.IsOutOfStock, dto.Gender,
                                         dto.DiscountPercentage, dto.IsNew, dto.ImageUrl,

@@ -1,3 +1,4 @@
+using Estudio.API.Middleware;
 using Estudio.Application.Implementation;
 using Estudio.Application.Interface;
 using Estudio.Contracts.Options;
@@ -91,6 +92,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

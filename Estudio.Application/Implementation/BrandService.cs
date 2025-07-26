@@ -1,4 +1,5 @@
-﻿using Estudio.Application.Interface;
+﻿using Estudio.Application.Exceptions;
+using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
 using Estudio.Infrastructure;
@@ -29,7 +30,7 @@ namespace Estudio.Application.Implementation
 
         public async Task<BrandDto?> GetByIdAsync(int id)
         {
-            return await _db.Brands
+            var brand = await _db.Brands
                 .Where(x => x.Id == id)
                 .Select(x => new BrandDto
                 {
@@ -38,6 +39,11 @@ namespace Estudio.Application.Implementation
                     Description = x.Description
                 })
                 .FirstOrDefaultAsync();
+
+            if (brand == null)
+                throw new NotFoundException($"Brand with ID {id} not found.");
+
+            return brand;
         }
 
         public async Task<BrandDto> CreateWithValidationAsync(BrandDto dto)

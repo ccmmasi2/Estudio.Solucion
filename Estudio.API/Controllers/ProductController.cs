@@ -1,4 +1,5 @@
-﻿using Estudio.Application.Interface;
+﻿using Estudio.Application.Exceptions;
+using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace Estudio.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _service.GetByIdAsync(id);
-            return product == null ? NotFound() : Ok(product);
+            return Ok(product);
         }
 
         [Authorize(Policy = "AdminOnly")]
@@ -38,6 +39,7 @@ namespace Estudio.API.Controllers
         {
             var created = await _service.CreateWithValidationAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+
         }
     }
 }
