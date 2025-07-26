@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static Estudio.Domain.Enumerators;
 
 namespace Estudio.API.DTO
 {
@@ -16,7 +17,7 @@ namespace Estudio.API.DTO
         public bool IsOutOfStock { get; init; }
 
         [Required]
-        public string Gender { get; init; } = default!;
+        public Gender Gender { get; init; } = default!;
         public decimal? DiscountPercentage { get; init; }
 
         [DefaultValue(false)]

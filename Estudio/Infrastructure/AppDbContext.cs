@@ -27,6 +27,8 @@ namespace Estudio.Infrastructure
                     .IsRequired();
 
                 builder.Property(x => x.Gender)
+                    .HasConversion<string>()
+                    .HasMaxLength(10)
                     .IsRequired();
 
                 builder.Property(x => x.ImageUrl)
