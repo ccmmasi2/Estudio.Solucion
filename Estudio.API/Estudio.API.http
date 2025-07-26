@@ -1,0 +1,6 @@
+@Estudio.API_HostAddress = http://localhost:5192
+
+GET {{Estudio.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
