@@ -81,6 +81,10 @@ namespace Estudio.Application.Implementation
                                                         x.Name.ToLower() == dto.Name.ToLower() &&
                                                         x.Gender == dto.Gender);
 
+            //Pattern matching
+            if(dto.Price is 0)
+                throw new Exception("Price should be bigger than zero");
+
             if (exists) throw new InvalidOperationException("Product already exists");
 
             var product = new Product(dto.Name, dto.Price, dto.IsOutOfStock, dto.Gender,
