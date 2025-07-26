@@ -1,5 +1,5 @@
 ﻿using Estudio.Application.Interface;
-using Estudio.Common.DTO;
+using Estudio.Contracts.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estudio.API.Controllers

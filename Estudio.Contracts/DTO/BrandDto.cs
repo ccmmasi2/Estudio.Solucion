@@ -1,0 +1,16 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Estudio.Contracts.DTO
+{
+    public record BrandDto
+    {
+        public int Id { get; init; }
+
+        [Required, MaxLength(50)]
+        public string Name { get; init; } = default!;
+
+
+        [MaxLength(1000)]
+        public string? Description { get; init; }
+    }
+}

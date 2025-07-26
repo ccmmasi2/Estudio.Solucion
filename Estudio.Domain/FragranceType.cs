@@ -8,7 +8,7 @@
 
         public ICollection<Product> Products { get; private set; } = new List<Product>();
 
-        protected FragranceType() {}
+        protected FragranceType() { }
 
         public FragranceType(string name, string? description = null)
         {

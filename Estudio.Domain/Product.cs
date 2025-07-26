@@ -1,4 +1,4 @@
-﻿using static Estudio.Common.Enums.Enumerators;
+﻿using static Estudio.Contracts.Enums.Enumerators;
 
 namespace Estudio.Domain
 {
@@ -22,10 +22,10 @@ namespace Estudio.Domain
         public string? ImageUrl { get; private set; }
         public int PresentationMM { get; private set; }
 
-        protected Product() { }  
+        protected Product() { }
 
         public Product(string name, decimal price,
-            bool isOutOfStock, Gender gender, decimal? discountPercentage, bool isNew, 
+            bool isOutOfStock, Gender gender, decimal? discountPercentage, bool isNew,
             string? imageUrl, int presentationMM, int brandId, int fragranceTypeId)
         {
             Name = name;

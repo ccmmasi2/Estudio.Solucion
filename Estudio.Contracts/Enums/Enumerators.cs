@@ -1,4 +1,4 @@
-﻿namespace Estudio.Common.Enums
+﻿namespace Estudio.Contracts.Enums
 {
     public class Enumerators
     {

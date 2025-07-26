@@ -1,4 +1,4 @@
-﻿using Estudio.Common.DTO;
+﻿using Estudio.Contracts.DTO;
 
 namespace Estudio.Application.Interface
 {

@@ -1,5 +1,5 @@
 ﻿using Estudio.Domain;
-using Estudio.SeedData.SeedDTO;
+using Estudio.Infrastructure.SeedData.SeedDTO;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 

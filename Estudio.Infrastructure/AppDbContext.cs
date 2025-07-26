@@ -21,7 +21,7 @@ namespace Estudio.Infrastructure
 
                 builder.Property(x => x.Name)
                     .HasMaxLength(50)
-                    .IsRequired(); 
+                    .IsRequired();
 
                 builder.Property(x => x.Price)
                     .IsRequired();
@@ -94,7 +94,7 @@ namespace Estudio.Infrastructure
                     .HasMaxLength(1000);
 
                 builder.HasIndex(x => x.Name)
-                    .IsUnique(); 
+                    .IsUnique();
             });
         }
     }

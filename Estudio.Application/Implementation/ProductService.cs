@@ -1,5 +1,5 @@
 ﻿using Estudio.Application.Interface;
-using Estudio.Common.DTO;
+using Estudio.Contracts.DTO;
 using Estudio.Domain;
 using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -82,13 +82,13 @@ namespace Estudio.Application.Implementation
                                                         x.Gender == dto.Gender);
 
             //Pattern matching
-            if(dto.Price is 0)
+            if (dto.Price is 0)
                 throw new Exception("Price should be bigger than zero");
 
             if (exists) throw new InvalidOperationException("Product already exists");
 
             var product = new Product(dto.Name, dto.Price, dto.IsOutOfStock, dto.Gender,
-                                        dto.DiscountPercentage, dto.IsNew, dto.ImageUrl, 
+                                        dto.DiscountPercentage, dto.IsNew, dto.ImageUrl,
                                         dto.PresentationMM, dto.BrandId, dto.FragranceTypeId);
 
             _db.Products.Add(product);

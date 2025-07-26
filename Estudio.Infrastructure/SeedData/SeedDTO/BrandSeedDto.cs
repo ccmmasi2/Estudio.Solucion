@@ -1,6 +1,6 @@
-﻿namespace Estudio.SeedData.SeedDTO
+﻿namespace Estudio.Infrastructure.SeedData.SeedDTO
 {
-    public class FragranceTypeSeedDto
+    public class BrandSeedDto
     {
         public string Name { get; set; } = default!;
         public string? Description { get; set; }
