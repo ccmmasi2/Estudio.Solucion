@@ -1,5 +1,6 @@
 ﻿using Estudio.Application.Exceptions;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 
 namespace Estudio.API.Middleware
@@ -23,55 +24,51 @@ namespace Estudio.API.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception");
-                await HandleExceptionAsync(context, ex);
+                var method = context.Request.Method;
+                var path = context.Request.Path;
+                var body = await ReadRequestBody(context.Request);
+                var statusCode = GetStatusCode(ex);
+
+                _logger.LogError(ex, "❌ Error en {Method} {Path}. Body: {Body}",
+                                 method, path, body);
+
+                await WriteErrorResponseAsync(context, ex, statusCode);
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task WriteErrorResponseAsync(HttpContext context, Exception exception, int statusCode)
         {
             context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
 
-            var response = context.Response;
-            int statusCode;
-            string errorMessage;
-
-            switch (exception)
+            var errorResponse = new
             {
-                case NotFoundException:
-                    statusCode = (int)HttpStatusCode.NotFound; // 404
-                    errorMessage = exception.Message;
-                    _logger.LogError(errorMessage, "NotFound");
-                    break;
-
-                case ConflictException:
-                    statusCode = (int)HttpStatusCode.Conflict; // 409
-                    errorMessage = exception.Message;
-                    _logger.LogError(errorMessage, "Conflict");
-                    break;
-
-                case BadRequestException:
-                    statusCode = (int)HttpStatusCode.BadRequest; // 400
-                    errorMessage = exception.Message;
-                    _logger.LogError(errorMessage, "BadRequest");
-                    break;
-
-                default:
-                    statusCode = (int)HttpStatusCode.InternalServerError; // 500
-                    errorMessage = "An unexpected error occurred.";
-                    _logger.LogError(errorMessage, "An unexpected error occurred.");
-                    break;
-            }
-
-            response.StatusCode = statusCode;
-
-            var result = JsonSerializer.Serialize(new
-            {
-                error = errorMessage,
+                error = exception.Message,
                 status = statusCode
-            });
+            };
 
-            return context.Response.WriteAsync(result);
+            var result = JsonSerializer.Serialize(errorResponse);
+            await context.Response.WriteAsync(result);
         }
+
+        private async Task<string> ReadRequestBody(HttpRequest request)
+        {
+            request.EnableBuffering();
+
+            request.Body.Position = 0;
+            using var reader = new StreamReader(request.Body, Encoding.UTF8, leaveOpen: true);
+            string body = await reader.ReadToEndAsync();
+
+            request.Body.Position = 0;
+            return body;
+        }
+
+        private int GetStatusCode(Exception exception) => exception switch
+        {
+            NotFoundException => (int)HttpStatusCode.NotFound,
+            ConflictException => (int)HttpStatusCode.Conflict,
+            BadRequestException => (int)HttpStatusCode.BadRequest,
+            _ => (int)HttpStatusCode.InternalServerError
+        };
     }
 }

@@ -8,9 +8,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//log
+var logPath = @"C:\Estudio\Logs";
+if (!Directory.Exists(logPath))
+{
+    Directory.CreateDirectory(logPath);
+}
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(new ConfigurationBuilder()
+            .AddJsonFile("serilog.json")
+            .Build())
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext();
+});
 
 // Configuración JWT desde appsettings.json
 // Registro en el contenedor de dependencias
