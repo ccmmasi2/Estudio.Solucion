@@ -1,6 +1,5 @@
 ﻿using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
-using Estudio.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

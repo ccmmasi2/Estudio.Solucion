@@ -2,10 +2,9 @@
 using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
-using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estudio.Application.Implementation
+namespace Estudio.Infrastructure.Implementation
 {
     public class FragranceTypeService : IFragranceTypeService
     {
@@ -51,7 +50,8 @@ namespace Estudio.Application.Implementation
             var exists = await _db.FragranceTypes.AnyAsync(x =>
                                                     x.Name.ToLower() == dto.Name.ToLower());
 
-            if (exists) throw new InvalidOperationException("FragranceType already exists");
+            if (exists) 
+                throw new InvalidOperationException("FragranceType with Name {dto.Name} already exists.");
 
             var fragranceType = new FragranceType(dto.Name, dto.Description);
 

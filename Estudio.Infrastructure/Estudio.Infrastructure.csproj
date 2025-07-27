@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Estudio.Application\Estudio.Application.csproj" />
     <ProjectReference Include="..\Estudio.Domain\Estudio.Domain.csproj" />
   </ItemGroup>
 

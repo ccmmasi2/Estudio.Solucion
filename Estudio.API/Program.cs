@@ -1,8 +1,9 @@
 using Estudio.API.Middleware;
-using Estudio.Application.Implementation;
 using Estudio.Application.Interface;
 using Estudio.Contracts.Options;
 using Estudio.Infrastructure;
+using Estudio.Infrastructure.Implementation;
+using Estudio.Infrastructure.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +50,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IFragranceTypeService, FragranceTypeService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddSingleton<ITraceLogger, TraceLogger>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>

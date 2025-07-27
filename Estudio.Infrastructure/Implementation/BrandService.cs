@@ -2,16 +2,15 @@
 using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
-using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estudio.Application.Implementation
+namespace Estudio.Infrastructure.Implementation
 {
     public class BrandService : IBrandService
     {
         private readonly AppDbContext _db;
 
-        public BrandService(AppDbContext db)
+        public BrandService(AppDbContext db, ITraceLogger logger)
         {
             _db = db;
         }
@@ -51,7 +50,8 @@ namespace Estudio.Application.Implementation
             var exists = await _db.Brands.AnyAsync(x =>
                                                     x.Name.ToLower() == dto.Name.ToLower());
 
-            if (exists) throw new InvalidOperationException("Brand already exists");
+            if (exists) 
+                throw new InvalidOperationException("Brand with Name {dto.Name} already exists.");
 
             var brand = new Brand(dto.Name, dto.Description);
 

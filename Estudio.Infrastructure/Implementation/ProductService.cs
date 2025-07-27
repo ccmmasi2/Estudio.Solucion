@@ -2,10 +2,9 @@
 using Estudio.Application.Interface;
 using Estudio.Contracts.DTO;
 using Estudio.Domain;
-using Estudio.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estudio.Application.Implementation
+namespace Estudio.Infrastructure.Implementation
 {
     public class ProductService : IProductService
     {
@@ -75,11 +74,11 @@ namespace Estudio.Application.Implementation
         {
             var brand = await _db.Brands.FindAsync(dto.BrandId);
             if (brand == null)
-                throw new NotFoundException("Brand does not exist.");
+                throw new NotFoundException($"Brand with ID {dto.BrandId} not found.");
 
             var fragranceType = await _db.FragranceTypes.FindAsync(dto.FragranceTypeId);
             if (fragranceType == null)
-                throw new NotFoundException("Fragrance Type does not exist.");
+                throw new NotFoundException($"Fragrance Type with ID {dto.FragranceTypeId} not found.");
 
             var exists = await _db.Products.AnyAsync(x =>
                                                         x.BrandId == dto.BrandId &&
@@ -89,7 +88,7 @@ namespace Estudio.Application.Implementation
 
             //Pattern matching
             if (dto.Price is 0)
-                throw new BadRequestException("Price should be bigger than zero");
+                throw new BadRequestException("Price should be bigger than zero.");
 
             if (exists)
                 throw new ConflictException("Product already exists.");
