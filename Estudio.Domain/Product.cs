@@ -18,14 +18,13 @@ namespace Estudio.Domain
         public decimal Price { get; private set; }
         public bool IsOutOfStock { get; private set; } = false;
         public decimal? DiscountPercentage { get; private set; }
-        public bool IsNew { get; private set; } = false;
         public string? ImageUrl { get; private set; }
         public int PresentationMM { get; private set; }
 
         protected Product() { }
 
         public Product(string name, decimal price,
-            bool isOutOfStock, Gender gender, decimal? discountPercentage, bool isNew,
+            bool isOutOfStock, Gender gender, decimal? discountPercentage, 
             string? imageUrl, int presentationMM, int brandId, int fragranceTypeId)
         {
             Name = name;
@@ -33,7 +32,6 @@ namespace Estudio.Domain
             IsOutOfStock = isOutOfStock;
             Gender = gender;
             DiscountPercentage = discountPercentage;
-            IsNew = isNew;
             ImageUrl = imageUrl;
             PresentationMM = presentationMM;
 

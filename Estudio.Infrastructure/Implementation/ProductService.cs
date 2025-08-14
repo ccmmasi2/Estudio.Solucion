@@ -26,7 +26,6 @@ namespace Estudio.Infrastructure.Implementation
                      IsOutOfStock = x.IsOutOfStock,
                      Gender = x.Gender,
                      DiscountPercentage = x.DiscountPercentage,
-                     IsNew = x.IsNew,
                      ImageUrl = x.ImageUrl,
                      PresentationMM = x.PresentationMM,
 
@@ -52,7 +51,6 @@ namespace Estudio.Infrastructure.Implementation
                     IsOutOfStock = x.IsOutOfStock,
                     Gender = x.Gender,
                     DiscountPercentage = x.DiscountPercentage,
-                    IsNew = x.IsNew,
                     ImageUrl = x.ImageUrl,
                     PresentationMM = x.PresentationMM,
 
@@ -94,7 +92,7 @@ namespace Estudio.Infrastructure.Implementation
                 throw new ConflictException("Product already exists.");
 
             var product = new Product(dto.Name, dto.Price, dto.IsOutOfStock, dto.Gender,
-                                        dto.DiscountPercentage, dto.IsNew, dto.ImageUrl,
+                                        dto.DiscountPercentage, dto.ImageUrl,
                                         dto.PresentationMM, dto.BrandId, dto.FragranceTypeId);
 
             _db.Products.Add(product);
@@ -108,7 +106,6 @@ namespace Estudio.Infrastructure.Implementation
                 IsOutOfStock = product.IsOutOfStock,
                 Gender = product.Gender,
                 DiscountPercentage = product.DiscountPercentage,
-                IsNew = product.IsNew,
                 ImageUrl = product.ImageUrl,
                 PresentationMM = product.PresentationMM,
 

@@ -20,9 +20,6 @@ namespace Estudio.Contracts.DTO
         public Gender Gender { get; init; } = default!;
         public decimal? DiscountPercentage { get; init; }
 
-        [DefaultValue(false)]
-        public bool IsNew { get; init; }
-
         [DefaultValue("No image yet")]
         public string? ImageUrl { get; init; }
 

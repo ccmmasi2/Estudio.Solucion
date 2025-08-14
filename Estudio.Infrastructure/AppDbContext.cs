@@ -35,10 +35,7 @@ namespace Estudio.Infrastructure
                     .HasMaxLength(5000);
 
                 builder.Property(x => x.IsOutOfStock)
-                    .HasDefaultValue(false);
-
-                builder.Property(x => x.IsNew)
-                    .HasDefaultValue(false);
+                    .HasDefaultValue(false); 
 
                 builder.Property(x => x.PresentationMM)
                     .IsRequired();
